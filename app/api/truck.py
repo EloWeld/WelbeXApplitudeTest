@@ -5,7 +5,7 @@ from ..db import get_db
 
 router = APIRouter()
 
-@router.put("/truck/{truck_id}")
+@router.put("/truck/{truck_id}", response_model=schemas.Truck)
 def update_truck(truck_id: int, truck: schemas.EditTruck, db: Session = Depends(get_db)):
     db_truck = db.query(models.Truck).get(truck_id)
     if db_truck is None:
