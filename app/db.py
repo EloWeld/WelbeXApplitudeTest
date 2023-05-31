@@ -1,3 +1,4 @@
+import os
 import random
 import time
 from sqlalchemy import create_engine, func, insert, text
@@ -9,8 +10,15 @@ import csv
 
 from app import models
 
+
 # Establish the database connection
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Three.ru2015@db/cargo_db"
+POSTGRES_USER = os.getenv("POSTGRES_USER")
+POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+POSTGRES_DB = os.getenv("POSTGRES_DB")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "db") # Default to "db" if not provided
+
+SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
